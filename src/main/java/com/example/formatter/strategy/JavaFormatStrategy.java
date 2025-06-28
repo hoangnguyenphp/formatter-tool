@@ -1,34 +1,40 @@
 package com.example.formatter.strategy;
 
-import com.google.googlejavaformat.java.Formatter;
+import com.github.javaparser.JavaParser;
+import com.github.javaparser.ParseResult;
+import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.printer.PrettyPrinter;
 import org.springframework.stereotype.Component;
 
 @Component
 public class JavaFormatStrategy implements FormatStrategy {
 
-    private final Formatter formatter = new Formatter();
+    private final JavaParser javaParser = new JavaParser();
+    private final PrettyPrinter prettyPrinter = new PrettyPrinter();
 
     @Override
-    public String getType() { return "java"; }
+    public String getType() {
+        return "java";
+    }
 
     @Override
     public String verify(String input) {
-        // Basic verification: attempt to format
-        try {
-            formatter.formatSource(input);
-            return "Valid Java source";
-        } catch (Exception e) {
-            return "Invalid Java source: " + e.getMessage();
-        }
+        ParseResult<CompilationUnit> result = javaParser.parse(input);
+        return result.isSuccessful() ? "Valid Java source" : "Invalid Java source: " + result.getProblems().toString();
     }
 
     @Override
     public String minify(String input) throws Exception {
-        return formatter.formatSource(input).replaceAll("\s+", " ");
+    	return "Not support Java minifying.";
     }
 
     @Override
     public String beautify(String input) throws Exception {
-        return formatter.formatSource(input);
+        ParseResult<CompilationUnit> result = javaParser.parse(input);
+        if (result.isSuccessful() && result.getResult().isPresent()) {
+            return prettyPrinter.print(result.getResult().get());
+        } else {
+            throw new IllegalArgumentException("Invalid Java source: " + result.getProblems().toString());
+        }
     }
 }
