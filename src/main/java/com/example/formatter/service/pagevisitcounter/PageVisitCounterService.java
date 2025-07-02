@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PageVisitCounterService {
-    private static final Path COUNTER_FILE = Paths.get("src/main/resources/visit-page-counter/counter.txt");
+    private static final Path COUNTER_FILE = Paths.get("src/main/resources/page-visit-counter/counter.txt");
     private static final AtomicInteger counter = new AtomicInteger(loadInitialCount());
     
     public PageVisitCounterService() throws IOException {
