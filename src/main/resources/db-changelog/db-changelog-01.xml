@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+          http://www.liquibase.org/xml/ns/dbchangelog
+          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.22.xsd">
+
+    <!-- 1. Create ENUM type for country codes -->
+    <changeSet id="1-create-country-code-enum" author="hoang">
+        <sql>
+            CREATE TYPE country_code_enum AS ENUM ('vn', 'en', 'int');
+        </sql>
+        <rollback>
+            <sql>DROP TYPE country_code_enum;</sql>
+        </rollback>
+    </changeSet>
+
+    <!-- 2. serial_article table -->
+    <changeSet id="2-create-serial-article" author="hoang">
+        <createTable tableName="serial_article">
+            <column name="serial_article_id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="serial_article_uuid" type="VARCHAR(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="serial_article_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- 3. article table -->
+    <changeSet id="3-create-article" author="hoang">
+        <createTable tableName="article">
+            <column name="article_id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="article_uuid" type="VARCHAR(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="article_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="article_content" type="TEXT"/>
+            <column name="serial_article_uuid" type="VARCHAR(100)"/>
+            <column name="country_code" type="country_code_enum">
+                <constraints nullable="false"/>
+            </column>
+            <column name="view_counter" type="INT" defaultValueNumeric="0"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="article"
+                baseColumnNames="serial_article_uuid"
+                constraintName="fk_article_serial"
+                referencedTableName="serial_article"
+                referencedColumnNames="serial_article_uuid"
+                onDelete="SET NULL"/>
+    </changeSet>
+
+    <!-- 4. topic table -->
+    <changeSet id="4-create-topic" author="hoang">
+        <createTable tableName="topic">
+            <column name="topic_id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="topic_uuid" type="VARCHAR(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="topic_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- 5. article_topic table -->
+    <changeSet id="5-create-article-topic" author="hoang">
+        <createTable tableName="article_topic">
+            <column name="article_topic_id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="article_uuid" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="topic_uuid" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="matter_topic" type="BOOLEAN" defaultValueBoolean="false"/>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="article_topic"
+                baseColumnNames="article_uuid"
+                constraintName="fk_article_topic_article"
+                referencedTableName="article"
+                referencedColumnNames="article_uuid"
+                onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint
+                baseTableName="article_topic"
+                baseColumnNames="topic_uuid"
+                constraintName="fk_article_topic_topic"
+                referencedTableName="topic"
+                referencedColumnNames="topic_uuid"
+                onDelete="CASCADE"/>
+    </changeSet>
+
+	<!-- 6. page_visit_counter table -->
+    <changeSet id="2" author="you">
+        <createTable tableName="page_visit_counter">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="count" type="INT"/>
+        </createTable>
+
+        <!-- Insert initial singleton row -->
+        <insert tableName="page_visit_counter">
+            <column name="id" value="1"/>
+            <column name="count" value="0"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
