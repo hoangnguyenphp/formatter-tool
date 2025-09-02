@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog>
     <changeSet id="269abb63-a78b-4148-a848-ef65ea04b8f1" author="hoang">
 	    <insert tableName="language">
 	        <column name="language_code" value="vi"/>
@@ -13,3 +15,5 @@
 	        <column name="language_name" value="International"/>
 	    </insert>
     </changeSet>
+    
+</databaseChangeLog>
