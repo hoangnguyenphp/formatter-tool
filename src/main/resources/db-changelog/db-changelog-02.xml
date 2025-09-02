@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+          http://www.liquibase.org/xml/ns/dbchangelog
+          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.22.xsd">
     <changeSet id="269abb63-a78b-4148-a848-ef65ea04b8f1" author="hoang">
 	    <insert tableName="language">
 	        <column name="language_code" value="vi"/>
@@ -13,3 +20,5 @@
 	        <column name="language_name" value="International"/>
 	    </insert>
     </changeSet>
+    
+</databaseChangeLog>
