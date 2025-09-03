@@ -20,4 +20,25 @@
 	    </insert>
     </changeSet>
     
+	<changeSet id="fb9f3804-01d4-4114-8127-02683b2238f8" author="hoang">
+	    <addDefaultValue 
+	        tableName="article" 
+	        columnName="default_language_code" 
+	        defaultValue="int"/>
+	</changeSet>
+	
+	
+	<changeSet id="74b494e2-e7d1-45c5-99e4-b6f67aee95ec" author="hoang">
+	    <dropPrimaryKey 
+	        tableName="article_topic" 
+	        constraintName="article_topic_pkey"/>
+	    <dropColumn 
+	        tableName="article_topic" 
+	        columnName="article_topic_id"/>
+	    <addPrimaryKey 
+	        tableName="article_topic" 
+	        columnNames="article_uuid,topic_uuid" 
+	        constraintName="article_topic_pkey"/>
+	</changeSet>
+    
 </databaseChangeLog>
