@@ -102,7 +102,6 @@
                                  referencedTableName="language"
                                  referencedColumnNames="language_code"/>
     </changeSet>
-
     
      <!-- serial_article_topic table -->
     <changeSet id="db9a4d84-1148-49b2-9ea4-6d00dc2c0a3f" author="hoang">
@@ -165,10 +164,10 @@
             <column name="default_language_code" type="VARCHAR(50)" defaultValue="int"/>
             <column name="date_created" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
             <column name="date_updated" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
-            <column name="created_user_uuid" type="VARCHAR(100)" 
-                    defaultValue="9c2d9d8c-26d1-4b02-8f12-7b18b7c6f693"/>
-            <column name="updated_user_uuid" type="VARCHAR(100)" 
-                    defaultValue="9c2d9d8c-26d1-4b02-8f12-7b18b7c6f693"/>
+            <column name="created_user" type="VARCHAR(100)" 
+                    defaultValue="admin"/>
+            <column name="updated_user" type="VARCHAR(100)" 
+                    defaultValue="admin"/>
         </createTable>
 
         <addForeignKeyConstraint baseTableName="article"
@@ -182,6 +181,18 @@
                                  constraintName="fk_article_language"
                                  referencedTableName="language"
                                  referencedColumnNames="language_code"/>
+                                 
+        <addForeignKeyConstraint baseTableName="article"
+                                 baseColumnNames="created_user"
+                                 constraintName="fk_article_app_user_created_user"
+                                 referencedTableName="app_user"
+                                 referencedColumnNames="user_name"/>
+                                 
+        <addForeignKeyConstraint baseTableName="article"
+                                 baseColumnNames="updated_user"
+                                 constraintName="fk_article_app_user_updated_user"
+                                 referencedTableName="app_user"
+                                 referencedColumnNames="user_name"/>   
     </changeSet>
 
     <!-- article_translation table -->
@@ -198,10 +209,10 @@
             <column name="serial_article_uuid" type="VARCHAR(100)"/>
             <column name="date_created" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
             <column name="date_updated" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
-            <column name="created_user_uuid" type="VARCHAR(100)" 
-                    defaultValue="9c2d9d8c-26d1-4b02-8f12-7b18b7c6f693"/>
-            <column name="updated_user_uuid" type="VARCHAR(100)" 
-                    defaultValue="9c2d9d8c-26d1-4b02-8f12-7b18b7c6f693"/>
+            <column name="created_user" type="VARCHAR(100)" 
+                    defaultValue="admin"/>
+            <column name="updated_user" type="VARCHAR(100)" 
+                    defaultValue="admin"/>
         </createTable>
         <addPrimaryKey tableName="article_translation" 
                        columnNames="article_uuid, language_code" 
@@ -216,6 +227,17 @@
                                  constraintName="fk_article_translation_language"
                                  referencedTableName="language"
                                  referencedColumnNames="language_code"/>
+        <addForeignKeyConstraint baseTableName="article_translation"
+                                 baseColumnNames="created_user"
+                                 constraintName="fk_article_translation_app_user_created_user"
+                                 referencedTableName="app_user"
+                                 referencedColumnNames="user_name"/>
+                                 
+        <addForeignKeyConstraint baseTableName="article_translation"
+                                 baseColumnNames="updated_user"
+                                 constraintName="fk_article_translation_app_user_updated_user"
+                                 referencedTableName="app_user"
+                                 referencedColumnNames="user_name"/>                                   
     </changeSet>
 
     <!-- article_topic table -->
