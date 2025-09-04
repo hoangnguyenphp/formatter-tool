@@ -17,6 +17,13 @@
             <column name="user_first_name" type="VARCHAR(255)"/>
             <column name="user_last_name" type="VARCHAR(255)"/>
         </createTable>
+        
+	    <insert tableName="app_user">
+	        <column name="user_name" value="admin"/>
+	        <column name="user_uuid" value="9c2d9d8c-26d1-4b02-8f12-7b18b7c6f693"/>
+	        <column name="user_first_name" value="admin"/>
+	        <column name="user_first_name" value="admin 01"/>
+	    </insert>
     </changeSet>
 
     <!-- language table -->
@@ -31,9 +38,54 @@
             </column>
         </createTable>
     </changeSet>
+    
+     <!-- topic table -->
+    <changeSet id="3-create-topic" author="hoang">
+        <createTable tableName="topic">
+            <column name="topic_id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="topic_uuid" type="VARCHAR(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="topic_name" type="VARCHAR(255)"/>
+            <column name="default_language_code" type="VARCHAR(50)"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="topic"
+                                 baseColumnNames="default_language_code"
+                                 constraintName="fk_topic_language"
+                                 referencedTableName="language"
+                                 referencedColumnNames="language_code"/>
+    </changeSet>
+
+    <!-- topic_translation table -->
+    <changeSet id="4-create-topic-translation" author="hoang">
+        <createTable tableName="topic_translation">
+            <column name="topic_uuid" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="language_code" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="topic_name" type="VARCHAR(255)"/>
+        </createTable>
+        <addPrimaryKey tableName="topic_translation"
+                       columnNames="topic_uuid, language_code"
+                       constraintName="pk_topic_translation"/>
+        <addForeignKeyConstraint baseTableName="topic_translation"
+                                 baseColumnNames="topic_uuid"
+                                 constraintName="fk_topic_translation_topic"
+                                 referencedTableName="topic"
+                                 referencedColumnNames="topic_uuid"/>
+        <addForeignKeyConstraint baseTableName="topic_translation"
+                                 baseColumnNames="language_code"
+                                 constraintName="fk_topic_translation_language"
+                                 referencedTableName="language"
+                                 referencedColumnNames="language_code"/>
+    </changeSet>
 
     <!-- serial_article table -->
-    <changeSet id="3-create-serial-article" author="hoang">
+    <changeSet id="5-create-serial-article" author="hoang">
         <createTable tableName="serial_article">
             <column name="serial_article_id" type="BIGSERIAL">
                 <constraints primaryKey="true" nullable="false"/>
@@ -51,8 +103,54 @@
                                  referencedColumnNames="language_code"/>
     </changeSet>
 
+    
+     <!-- serial_article_topic table -->
+    <changeSet id="db9a4d84-1148-49b2-9ea4-6d00dc2c0a3f" author="hoang">
+        <createTable tableName="serial_article_topic">
+            <column name="serial_article_uuid" type="VARCHAR(100)"/>
+            <column name="topic_uuid" type="VARCHAR(100)"/>
+            <column name="matter_topic" type="BOOLEAN" defaultValueBoolean="false"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="serial_article_topic"
+                                 baseColumnNames="serial_article_uuid"
+                                 constraintName="fk_serial_article_topic_serial_article_uuid"
+                                 referencedTableName="serial_article"
+                                 referencedColumnNames="serial_article_uuid"/>
+        <addForeignKeyConstraint baseTableName="serial_article_topic"
+                                 baseColumnNames="topic_uuid"
+                                 constraintName="fk_serial_article_topic_topic_uuid"
+                                 referencedTableName="topic"
+                                 referencedColumnNames="topic_uuid"/>
+    </changeSet>
+    
+    <!-- serial_article_translation table -->
+    <changeSet id="6-create-serial-article-translation" author="hoang">
+        <createTable tableName="serial_article_translation">
+            <column name="serial_article_uuid" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="language_code" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="serial_article_name" type="VARCHAR(255)"/>
+        </createTable>
+        <addPrimaryKey tableName="serial_article_translation"
+                       columnNames="serial_article_uuid, language_code"
+                       constraintName="pk_serial_article_translation"/>
+        <addForeignKeyConstraint baseTableName="serial_article_translation"
+                                 baseColumnNames="serial_article_uuid"
+                                 constraintName="fk_serial_article_translation_serial_article"
+                                 referencedTableName="serial_article"
+                                 referencedColumnNames="serial_article_uuid"/>
+        <addForeignKeyConstraint baseTableName="serial_article_translation"
+                                 baseColumnNames="language_code"
+                                 constraintName="fk_serial_article_translation_language"
+                                 referencedTableName="language"
+                                 referencedColumnNames="language_code"/>
+    </changeSet>
+
     <!-- article table -->
-    <changeSet id="4-create-article" author="hoang">
+    <changeSet id="7-create-article" author="hoang">
         <createTable tableName="article">
             <column name="article_id" type="BIGSERIAL">
                 <constraints primaryKey="true" nullable="false"/>
@@ -64,7 +162,7 @@
             <column name="article_content" type="TEXT"/>
             <column name="serial_article_uuid" type="VARCHAR(100)"/>
             <column name="view_counter" type="INT" defaultValueNumeric="0"/>
-            <column name="default_language_code" type="VARCHAR(50)"/>
+            <column name="default_language_code" type="VARCHAR(50)" defaultValue="int"/>
             <column name="date_created" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
             <column name="date_updated" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
             <column name="created_user_uuid" type="VARCHAR(100)" 
@@ -87,7 +185,7 @@
     </changeSet>
 
     <!-- article_translation table -->
-    <changeSet id="5-create-article-translation" author="hoang">
+    <changeSet id="8-create-article-translation" author="hoang">
         <createTable tableName="article_translation">
             <column name="article_uuid" type="VARCHAR(100)">
                 <constraints nullable="false"/>
@@ -120,61 +218,17 @@
                                  referencedColumnNames="language_code"/>
     </changeSet>
 
-    <!-- topic table -->
-    <changeSet id="6-create-topic" author="hoang">
-        <createTable tableName="topic">
-            <column name="topic_id" type="BIGSERIAL">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="topic_uuid" type="VARCHAR(100)">
-                <constraints unique="true" nullable="false"/>
-            </column>
-            <column name="topic_name" type="VARCHAR(255)"/>
-            <column name="default_language_code" type="VARCHAR(50)"/>
-        </createTable>
-        <addForeignKeyConstraint baseTableName="topic"
-                                 baseColumnNames="default_language_code"
-                                 constraintName="fk_topic_language"
-                                 referencedTableName="language"
-                                 referencedColumnNames="language_code"/>
-    </changeSet>
-
-    <!-- topic_translation table -->
-    <changeSet id="7-create-topic-translation" author="hoang">
-        <createTable tableName="topic_translation">
-            <column name="topic_uuid" type="VARCHAR(100)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="language_code" type="VARCHAR(50)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="topic_name" type="VARCHAR(255)"/>
-        </createTable>
-        <addPrimaryKey tableName="topic_translation"
-                       columnNames="topic_uuid, language_code"
-                       constraintName="pk_topic_translation"/>
-        <addForeignKeyConstraint baseTableName="topic_translation"
-                                 baseColumnNames="topic_uuid"
-                                 constraintName="fk_topic_translation_topic"
-                                 referencedTableName="topic"
-                                 referencedColumnNames="topic_uuid"/>
-        <addForeignKeyConstraint baseTableName="topic_translation"
-                                 baseColumnNames="language_code"
-                                 constraintName="fk_topic_translation_language"
-                                 referencedTableName="language"
-                                 referencedColumnNames="language_code"/>
-    </changeSet>
-
     <!-- article_topic table -->
-    <changeSet id="8-create-article-topic" author="hoang">
+    <changeSet id="9-create-article-topic" author="hoang">
         <createTable tableName="article_topic">
-            <column name="article_topic_id" type="BIGSERIAL">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
             <column name="article_uuid" type="VARCHAR(100)"/>
             <column name="topic_uuid" type="VARCHAR(100)"/>
             <column name="matter_topic" type="BOOLEAN" defaultValueBoolean="false"/>
         </createTable>
+	    <addPrimaryKey 
+	        tableName="article_topic" 
+	        columnNames="article_uuid,topic_uuid" 
+	        constraintName="article_topic_pkey"/>
         <addForeignKeyConstraint baseTableName="article_topic"
                                  baseColumnNames="article_uuid"
                                  constraintName="fk_article_topic_article"
@@ -187,34 +241,8 @@
                                  referencedColumnNames="topic_uuid"/>
     </changeSet>
 
-    <!-- serial_article_translation table -->
-    <changeSet id="9-create-serial-article-translation" author="hoang">
-        <createTable tableName="serial_article_translation">
-            <column name="serial_article_uuid" type="VARCHAR(100)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="language_code" type="VARCHAR(50)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="serial_article_name" type="VARCHAR(255)"/>
-        </createTable>
-        <addPrimaryKey tableName="serial_article_translation"
-                       columnNames="serial_article_uuid, language_code"
-                       constraintName="pk_serial_article_translation"/>
-        <addForeignKeyConstraint baseTableName="serial_article_translation"
-                                 baseColumnNames="serial_article_uuid"
-                                 constraintName="fk_serial_article_translation_serial_article"
-                                 referencedTableName="serial_article"
-                                 referencedColumnNames="serial_article_uuid"/>
-        <addForeignKeyConstraint baseTableName="serial_article_translation"
-                                 baseColumnNames="language_code"
-                                 constraintName="fk_serial_article_translation_language"
-                                 referencedTableName="language"
-                                 referencedColumnNames="language_code"/>
-    </changeSet>
-
 	<!-- 10. page_visit_counter table -->
-    <changeSet id="2" author="you">
+    <changeSet id="10-create-page-visit-counter" author="hoang">
         <createTable tableName="page_visit_counter">
             <column name="id" type="BIGINT">
                 <constraints primaryKey="true" nullable="false"/>
