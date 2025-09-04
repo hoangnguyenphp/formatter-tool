@@ -22,7 +22,7 @@
 	        <column name="user_name" value="admin"/>
 	        <column name="user_uuid" value="9c2d9d8c-26d1-4b02-8f12-7b18b7c6f693"/>
 	        <column name="user_first_name" value="admin"/>
-	        <column name="user_first_name" value="admin 01"/>
+	        <column name="user_last_name" value="admin 01"/>
 	    </insert>
     </changeSet>
 
