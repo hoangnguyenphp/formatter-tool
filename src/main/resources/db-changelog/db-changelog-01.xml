@@ -12,8 +12,12 @@
             <column name="user_id" type="BIGSERIAL">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="user_name" type="VARCHAR(255)"/>
-            <column name="user_uuid" type="VARCHAR(100)"/>
+            <column name="user_name" type="VARCHAR(255)">
+            	<constraints unique="true" nullable="false"/>
+            </column>
+            <column name="user_uuid" type="VARCHAR(100)">
+            	<constraints unique="true" nullable="false"/>
+            </column>
             <column name="user_first_name" type="VARCHAR(255)"/>
             <column name="user_last_name" type="VARCHAR(255)"/>
         </createTable>
@@ -175,24 +179,21 @@
                                  constraintName="fk_article_serial"
                                  referencedTableName="serial_article"
                                  referencedColumnNames="serial_article_uuid"/>
-
         <addForeignKeyConstraint baseTableName="article"
                                  baseColumnNames="default_language_code"
                                  constraintName="fk_article_language"
                                  referencedTableName="language"
-                                 referencedColumnNames="language_code"/>
-                                 
-        <addForeignKeyConstraint baseTableName="article"
-                                 baseColumnNames="created_user"
-                                 constraintName="fk_article_app_user_created_user"
-                                 referencedTableName="app_user"
-                                 referencedColumnNames="user_name"/>
-                                 
-        <addForeignKeyConstraint baseTableName="article"
-                                 baseColumnNames="updated_user"
-                                 constraintName="fk_article_app_user_updated_user"
-                                 referencedTableName="app_user"
-                                 referencedColumnNames="user_name"/>   
+                                 referencedColumnNames="language_code"/>                      
+    <addForeignKeyConstraint baseTableName="article"
+                             baseColumnNames="created_user"
+                             constraintName="fk_article_app_user_created_user"
+                             referencedTableName="app_user"
+                             referencedColumnNames="user_name"/>
+    <addForeignKeyConstraint baseTableName="article"
+                             baseColumnNames="updated_user"
+                             constraintName="fk_article_app_user_updated_user"
+                             referencedTableName="app_user"
+                             referencedColumnNames="user_name"/>  
     </changeSet>
 
     <!-- article_translation table -->
