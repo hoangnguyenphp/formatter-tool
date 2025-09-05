@@ -171,6 +171,7 @@
             <column name="created_user" type="VARCHAR(100)" 
                     defaultValue="admin"/>
             <column name="updated_user" type="VARCHAR(100)"/>
+            <column name="source_reference" type="VARCHAR(1000)"/>
         </createTable>
 
         <addForeignKeyConstraint baseTableName="article"
