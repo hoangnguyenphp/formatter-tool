@@ -165,13 +165,14 @@
             <column name="article_content" type="TEXT"/>
             <column name="serial_article_uuid" type="VARCHAR(100)"/>
             <column name="view_counter" type="INT" defaultValueNumeric="0"/>
-            <column name="default_language_code" type="VARCHAR(50)" defaultValue="int"/>
+            <column name="default_language_code" type="VARCHAR(50)" defaultValue="int"/><!-- int = international -->
             <column name="date_created" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
             <column name="date_updated" type="TIMESTAMP" />
             <column name="created_user" type="VARCHAR(100)" 
                     defaultValue="admin"/>
             <column name="updated_user" type="VARCHAR(100)"/>
             <column name="source_reference" type="VARCHAR(1000)"/>
+            <column name="chapter_id" type="INT"/>
         </createTable>
 
         <addForeignKeyConstraint baseTableName="article"
@@ -213,6 +214,8 @@
             <column name="created_user" type="VARCHAR(100)" 
                     defaultValue="admin"/>
             <column name="updated_user" type="VARCHAR(100)"/>
+            <column name="source_reference" type="VARCHAR(1000)"/>
+            <column name="chapter_id" type="INT"/>            
         </createTable>
         <addPrimaryKey tableName="article_translation" 
                        columnNames="article_uuid, language_code" 
