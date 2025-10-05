@@ -18,5 +18,88 @@
 	        <column name="language_code" value="int"/>
 	        <column name="language_name" value="International"/>
 	    </insert>
+	    
+        <insert tableName="topic">
+            <column name="topic_uuid" value="c03f204f-8803-4152-89e0-94958897d9fd"/>
+            <column name="topic_name" value="Joking 🤣"/>
+            <column name="default_language_code" value="int"/>
+        </insert>
+        <insert tableName="topic">
+            <column name="topic_uuid" value="13e17792-36c8-4dc0-bbe2-2c99454a9c55"/>
+            <column name="topic_name" value="Discovery"/>
+            <column name="default_language_code" value="en"/>
+        </insert>
+        <insert tableName="topic_translation">
+            <column name="topic_uuid" value="c03f204f-8803-4152-89e0-94958897d9fd"/>
+            <column name="language_code" value="en"/>
+            <column name="topic_name" value="Joking 🤣"/>
+        </insert>
+        <insert tableName="topic_translation">
+            <column name="topic_uuid" value="c03f204f-8803-4152-89e0-94958897d9fd"/>
+            <column name="language_code" value="vi"/>
+            <column name="topic_name" value="Truyện Cười 🤣"/>
+        </insert>
+        <insert tableName="topic_translation">
+            <column name="topic_uuid" value="13e17792-36c8-4dc0-bbe2-2c99454a9c55"/>
+            <column name="language_code" value="en"/>
+            <column name="topic_name" value="Discovery"/>
+        </insert>
+        <insert tableName="topic_translation">
+            <column name="topic_uuid" value="13e17792-36c8-4dc0-bbe2-2c99454a9c55"/>
+            <column name="language_code" value="vi"/>
+            <column name="topic_name" value="Khám Phá"/>
+        </insert>
+        <insert tableName="serial_article">
+            <column name="serial_article_uuid" value="d3b64486-b155-41a2-a0ce-c92ad00892f7"/>
+            <column name="serial_article_name" value="History of America (USA)"/>
+            <column name="default_language_code" value="en"/>
+        </insert>
+        <insert tableName="serial_article_translation">
+            <column name="serial_article_uuid" value="d3b64486-b155-41a2-a0ce-c92ad00892f7"/>
+            <column name="language_code" value="en"/>
+            <column name="serial_article_name" value="History of America (USA)"/>
+        </insert>
+        <insert tableName="serial_article_translation">
+            <column name="serial_article_uuid" value="d3b64486-b155-41a2-a0ce-c92ad00892f7"/>
+            <column name="language_code" value="vi"/>
+            <column name="serial_article_name" value="Lịch Sử Nước Mỹ"/>
+        </insert>
+        <insert tableName="serial_article_topic">
+            <column name="serial_article_uuid" value="d3b64486-b155-41a2-a0ce-c92ad00892f7"/>
+            <column name="topic_uuid" value="13e17792-36c8-4dc0-bbe2-2c99454a9c55"/>
+            <column name="master_topic" value="true"/>
+        </insert>
+
+		<!-- Insert article -->
+        <sql>
+            <![CDATA[
+		       INSERT INTO article(article_uuid, article_name, article_content, default_language_code)
+		        VALUES (
+		            '2037426d-ad61-4d12-8a04-765228806dbf',
+		            'Programmer Jokes - Part 01',
+		            '<p><strong><em>Debugging</em></strong></p><p>Being the detective in a crime movie — where you''re also the murderer. 🔪🧑‍💻</p><p><br></p><p><strong><em>Why do programmers prefer dark mode?</em></strong></p><p>Because light attracts bugs. 🪲💡</p><p><br></p><p><strong><em>How many programmers does it take to change a light bulb?</em></strong></p><p>None — that''s a hardware problem. 🧯</p><p><br></p><p><strong><em>Why do Java developers wear glasses?</em></strong></p><p>Because they don’t C#. 👓</p><p><br></p><p><strong><em>A SQL query walks into a bar...</em></strong></p><p>He walks up to two tables and asks: "Can I join you?" 🍻</p><p><br></p><p><strong><em>I had a problem, so I used regex.</em></strong></p><p>Now I have two problems. 😩🔍</p><p><br></p><p><strong><em>Why did the developer go broke?</em></strong></p><p>Because he used up all his cache. 💸🧠</p><p><br></p><p><strong><em>What’s a programmer’s favorite hangout place?</em></strong></p><p>The Foo Bar. 🍸</p><p><br></p><p><strong><em>Why was the JavaScript developer sad?</em></strong></p><p>Because he didn’t null his feelings. 😢</p><p><br></p><p><strong><em>What’s the object-oriented way to become wealthy?</em></strong></p><p>Inheritance. 🏡💰</p><p><br></p><p><strong><em>Why can''t computers take their hats off?</em></strong></p><p>Because they have CAPS LOCK on. 🧢</p><p><br></p><p><strong><em>Knock knock.</em></strong></p><p>Who’s there? [Very long pause] ...Java. ☕⏳</p>',
+		            'int'
+		        );
+            ]]>
+        </sql>
+        
+        <!-- Insert article_translation -->
+        <sql>
+            <![CDATA[
+                INSERT INTO article_translation(article_uuid, article_name, article_content, language_code)
+                VALUES ('2037426d-ad61-4d12-8a04-765228806dbf', 'Programmer Jokes - Part 01',
+                '<p><strong><em>Debugging</em></strong></p><p>Being the detective in a crime movie — where you''re also the murderer. 🔪🧑‍💻</p><p><br></p><p><strong><em>Why do programmers prefer dark mode?</em></strong></p><p>Because light attracts bugs. 🪲💡</p><p><br></p><p><strong><em>How many programmers does it take to change a light bulb?</em></strong></p><p>None — that''s a hardware problem. 🧯</p><p><br></p><p><strong><em>Why do Java developers wear glasses?</em></strong></p><p>Because they don’t C#. 👓</p><p><br></p><p><strong><em>A SQL query walks into a bar...</em></strong></p><p>He walks up to two tables and asks: "Can I join you?" 🍻</p><p><br></p><p><strong><em>I had a problem, so I used regex.</em></strong></p><p>Now I have two problems. 😩🔍</p><p><br></p><p><strong><em>Why did the developer go broke?</em></strong></p><p>Because he used up all his cache. 💸🧠</p><p><br></p><p><strong><em>What’s a programmer’s favorite hangout place?</em></strong></p><p>The Foo Bar. 🍸</p><p><br></p><p><strong><em>Why was the JavaScript developer sad?</em></strong></p><p>Because he didn’t null his feelings. 😢</p><p><br></p><p><strong><em>What’s the object-oriented way to become wealthy?</em></strong></p><p>Inheritance. 🏡💰</p><p><br></p><p><strong><em>Why can''t computers take their hats off?</em></strong></p><p>Because they have CAPS LOCK on. 🧢</p><p><br></p><p><strong><em>Knock knock.</em></strong></p><p>Who’s there? [Very long pause] ...Java. ☕⏳</p>',
+                'int');
+            ]]>
+        </sql>
+        
+        <!-- Insert article_topic -->
+        <insert tableName="article_topic">
+            <column name="article_uuid" value="2037426d-ad61-4d12-8a04-765228806dbf"/>
+            <column name="topic_uuid" value="c03f204f-8803-4152-89e0-94958897d9fd"/>
+            <column name="master_topic" value="true"/>
+        </insert>
+        
+                                                                           	    
     </changeSet>
 </databaseChangeLog>
