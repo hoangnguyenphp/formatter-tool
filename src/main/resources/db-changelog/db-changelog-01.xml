@@ -112,7 +112,7 @@
         <createTable tableName="serial_article_topic">
             <column name="serial_article_uuid" type="VARCHAR(100)"/>
             <column name="topic_uuid" type="VARCHAR(100)"/>
-            <column name="matter_topic" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="master_topic" type="BOOLEAN" defaultValueBoolean="false"/>
         </createTable>
         <addForeignKeyConstraint baseTableName="serial_article_topic"
                                  baseColumnNames="serial_article_uuid"
@@ -248,7 +248,7 @@
         <createTable tableName="article_topic">
             <column name="article_uuid" type="VARCHAR(100)"/>
             <column name="topic_uuid" type="VARCHAR(100)"/>
-            <column name="matter_topic" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="master_topic" type="BOOLEAN" defaultValueBoolean="false"/>
         </createTable>
 	    <addPrimaryKey 
 	        tableName="article_topic" 
