@@ -70,11 +70,6 @@
 		    <artifactId>postgresql</artifactId>
 		    <scope>runtime</scope>
 		</dependency>
-		<!-- Liqui Database -->
-		<dependency>
-		    <groupId>org.liquibase</groupId>
-		    <artifactId>liquibase-core</artifactId>
-		</dependency>
     </dependencies>
     <build>
         <plugins>
